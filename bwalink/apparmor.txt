@@ -1,0 +1,66 @@
+#include <tunables/global>
+
+profile bwalink flags=(attach_disconnected,mediate_deleted,complain) {
+  #include <abstractions/base>
+  #include <abstractions/bash>
+  #include <abstractions/ruby>
+  #include <abstractions/nameservice>
+
+  # Allow network access
+  network inet stream,
+  network inet6 stream,
+  network inet udp,
+  network inet6 udp,
+
+  # Home Assistant API access
+  unix (bind,listen) type=stream addr="@/core/api/supervisor-api/*",
+
+  # Access to config files and scripts
+  /usr/bin/socat ix,
+  /usr/bin/bwa_mqtt_bridge ix,
+  /usr/bin/ruby* ix,
+  /usr/lib/ruby/** rm,
+
+  # System access
+  /proc/sys/net/core/somaxconn r,
+  /run/** rw,
+  /data/** rw,
+
+  # Timezone data
+  /usr/share/zoneinfo/** r,
+
+  # Needed for shell operations
+  /bin/** ix,
+  /usr/bin/** ix,
+  /command/** ix,
+  /init rwix,
+  /usr/lib/s6/** ix,
+  /etc/services.d/** ix,
+  /etc/cont-init.d/** ix,
+  /etc/cont-finish.d/** ix,
+  /etc/fix-attrs.d/** ix,
+
+  # Ruby gem related
+  /usr/lib/gems/** rm,
+  /usr/local/bundle/** rm,
+
+  # Logging
+  /proc/*/stat r,
+  /proc/*/cmdline r,
+  /proc/sys/kernel/hostname r,
+  
+  # Deny everything else
+  deny @{PROC}/{*,**^[0-9*],sys/kernel/shm*} wkx,
+  deny @{PROC}/sysrq-trigger rwklx,
+  deny @{PROC}/mem rwklx,
+  deny @{PROC}/kmem rwklx,
+  deny @{PROC}/kcore rwklx,
+  deny mount,
+  deny /sys/[^f]*/** wklx,
+  deny /sys/f[^s]*/** wklx,
+  deny /sys/fs/[^c]*/** wklx,
+  deny /sys/fs/c[^g]*/** wklx,
+  deny /sys/fs/cg[^r]*/** wklx,
+  deny /sys/firmware/** rwklx,
+  deny /sys/kernel/security/** rwklx,
+}
