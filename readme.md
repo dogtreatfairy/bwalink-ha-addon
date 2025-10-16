@@ -15,7 +15,7 @@
 2. Thanks to ccutrer for the backend (https://github.com/ccutrer/balboa_worldwide_app) and figuring out the interface.
 
 ## Purpose
-To expand on the work of jshank and ccutrer and simplify the Home Assistan install and update process. And when I say expand, what I really mean is to copy it to a new repository and move files around so Home Assistant is happy, because there is no planet on which I could have built any of this on my own. 
+To expand on the work of jshank and ccutrer and simplify the Home Assistant install and update process. And when I say expand, what I really mean is to copy it to a new repository and move files around so Home Assistant is happy, because there is no planet on which I could have built any of this on my own. 
 
 ## Overview
 BWALink is an add-on for Home Assistant that allows you to connect and control Balboa Water Group spa controllers using a serial-to-IP gateway and MQTT. This enables seamless integration of your spa with Home Assistant, providing access to sensors and switches for spa features.
