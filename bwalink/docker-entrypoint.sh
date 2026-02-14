@@ -27,6 +27,8 @@ fi
 
 DEVICE=/run/service/hottub
 if bashio::var.true "$(bashio::config 'socat')"; then
+    # Ensure the directory exists (no longer auto-created since HA addons -> apps migration)
+    mkdir -p /run/service
     bashio::log.info "Starting socat connecting ${DEVICE} to ${BRIDGE_IP}:${BRIDGE_PORT}"
     #Start-up socat to bind the remote serial to IP relay to a virtual port on /run/service/hottub
     socat pty,link=${DEVICE},b115200,raw,echo=0 tcp4:${BRIDGE_IP}:${BRIDGE_PORT},forever,interval=10,fork &
