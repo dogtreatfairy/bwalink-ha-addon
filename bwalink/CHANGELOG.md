@@ -1,5 +1,11 @@
 # Changelog
 
+
+## [v2026.1] - 2026-02-14
+
+* Fixed SOCAT logging issue. 
+
+
 ## [v2025.7] - 2025-10-02
 
 * Updated config.yaml to include AppArmor profile for Home Assistant
