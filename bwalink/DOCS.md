@@ -60,8 +60,8 @@ For more details, visit the [jshank BWALink GitHub repository](https://github.co
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
-[release-shield]: https://img.shields.io/badge/version-v2025.7-blue.svg
-[release]: https://github.com/dogtreatfairy/bwalink/releases/tag/2025.7
-[changelog-shield]: https://img.shields.io/badge/changelog-v2025.7-orange.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg
+[release-shield]: https://img.shields.io/badge/version-v2026.1-blue.svg
+[release]: https://github.com/dogtreatfairy/bwalink-ha-addon/releases/tag/2026.1
+[changelog-shield]: https://img.shields.io/badge/changelog-v2026.1-orange.svg
 [changelog]: https://github.com/dogtreatfairy/bwalink-ha-addon/blob/main/bwalink/CHANGELOG.md
