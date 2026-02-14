@@ -14,6 +14,7 @@ RUN apk update && apk add --no-cache \
     tzdata \
     build-base \
   && bundle config set deployment 'true' \
+  && gem install mqtt-homie-homeassistant -v '~> 1.1.0' \
   && gem install balboa_worldwide_app \
   && apk del build-base \
   && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*

@@ -1,9 +1,9 @@
 # Changelog
 
-
 ## [v2026.1] - 2026-02-14
 
-* Fixed SOCAT logging issue. 
+* Ensure `/run/service` exists before starting `socat` — stops repeated unlink errors and PTY creation failures.
+* Pin `mqtt-homie-homeassistant` to `~> 1.1.0` to avoid `hass_button` validation crash (workaround for upstream incompatibility).
 
 
 ## [v2025.7] - 2025-10-02
