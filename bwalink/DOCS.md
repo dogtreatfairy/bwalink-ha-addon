@@ -14,6 +14,8 @@
 1. Thanks to the great work from jshank (https://github.com/jshank/bwalink) getting this working as a Local (manual) Add-on.
 2. Thanks to ccutrer for the backend (https://github.com/ccutrer/balboa_worldwide_app) and figuring out the interface.
 
+> Note: This add-on currently builds and runs using the maintained fork at https://github.com/dogtreatfairy/balboa_worldwide_app.
+
 ## Purpose
 To expand on the work of jshank and ccutrer and simplify the Home Assistan install and update process. And when I say expand, what I really mean is to copy it to a new repository and move files around so Home Assistant is happy, because there is no planet on which I could have built any of this on my own. 
 
@@ -61,7 +63,7 @@ For more details, visit the [jshank BWALink GitHub repository](https://github.co
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg
-[release-shield]: https://img.shields.io/badge/version-v2026.1-blue.svg
-[release]: https://github.com/dogtreatfairy/bwalink-ha-addon/releases/tag/2026.1
-[changelog-shield]: https://img.shields.io/badge/changelog-v2026.1-orange.svg
+[release-shield]: https://img.shields.io/badge/version-v2026.2-blue.svg
+[release]: https://github.com/dogtreatfairy/bwalink-ha-addon/releases/tag/2026.2
+[changelog-shield]: https://img.shields.io/badge/changelog-v2026.2-orange.svg
 [changelog]: https://github.com/dogtreatfairy/bwalink-ha-addon/blob/main/bwalink/CHANGELOG.md

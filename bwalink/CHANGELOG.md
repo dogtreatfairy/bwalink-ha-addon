@@ -1,5 +1,9 @@
 # Changelog
 
+## [v2026.2] - 2026-02-14
+
+* Bump for backend changes.
+
 ## [v2026.1] - 2026-02-14
 
 * Ensure `/run/service` exists before starting `socat` — stops repeated unlink errors and PTY creation failures.
