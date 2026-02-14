@@ -12,7 +12,7 @@
 
 ## Credit
 1. Thanks to the great work from jshank (https://github.com/jshank/bwalink) getting this working as a Local (manual) Add-on.
-2. Thanks to ccutrer for the backend (https://github.com/ccutrer/balboa_worldwide_app) and figuring out the interface.
+2. Thanks to ccutrer for the backend (https://github.com/dogtreatfairy/balboa_worldwide_app) and figuring out the interface.
 
 ## Purpose
 To expand on the work of jshank and ccutrer and simplify the Home Assistan install and update process. And when I say expand, what I really mean is to copy it to a new repository and move files around so Home Assistant is happy, because there is no planet on which I could have built any of this on my own. 

@@ -3,7 +3,8 @@
 ## [v2026.1] - 2026-02-14
 
 * Ensure `/run/service` exists before starting `socat` — stops repeated unlink errors and PTY creation failures.
-* Pin `mqtt-homie-homeassistant` to `~> 1.1.0` to avoid `hass_button` validation crash (workaround for upstream incompatibility).
+* Use backend app from `dogtreatfairy/balboa_worldwide_app` during addon build.
+* Include `bwa_mqtt_bridge` action discovery fix (single-value enum button properties) to restore compatibility with `mqtt-homie-homeassistant` >= 1.2.0.
 
 
 ## [v2025.7] - 2025-10-02
