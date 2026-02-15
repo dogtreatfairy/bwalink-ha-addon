@@ -9,6 +9,16 @@ export LOG_LEVEL=$(bashio::config 'log_level')
 
 bashio::log.info "Setting addon timezone to ${TZ} based on the system timezone."
 
+if ! bashio::config.has_value 'bridge_ip'; then
+    bashio::log.error "Missing required configuration: bridge_ip"
+    exit 1
+fi
+
+if ! [[ "${BRIDGE_PORT}" =~ ^[0-9]+$ ]] || (( BRIDGE_PORT < 1 || BRIDGE_PORT > 65535 )); then
+    bashio::log.error "Invalid bridge_port '${BRIDGE_PORT}'. Expected an integer between 1 and 65535."
+    exit 1
+fi
+
 if bashio::config.has_value 'mqtt_uri'; then
     MQTT_URI=$(bashio::config 'mqtt_uri')
 # no mqtt config is supplied, so let's use the mqtt addon config
@@ -22,6 +32,11 @@ elif bashio::var.has_value "$(bashio::services 'mqtt')"; then
     fi
 else
     bashio::log.error "No MQTT configuration found. Exiting..."
+    exit 1
+fi
+
+if ! [[ "${MQTT_URI}" =~ ^mqtts?:// ]]; then
+    bashio::log.error "Invalid MQTT URI '${MQTT_URI}'. Expected URI to start with mqtt:// or mqtts://"
     exit 1
 fi
 

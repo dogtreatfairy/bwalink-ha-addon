@@ -1,4 +1,6 @@
 ARG BUILD_FROM
+ARG BACKEND_REPO=https://github.com/dogtreatfairy/balboa_worldwide_app.git
+ARG BACKEND_REF=99c1eb827f08a301420040632d4d2c36178325db
 FROM ${BUILD_FROM}
 
 # Update and install necessary packages in a single RUN to reduce image layers
@@ -16,8 +18,9 @@ RUN apk update && apk add --no-cache \
     tzdata \
     build-base \
   && bundle config set deployment 'true' \
-  && git clone --depth 1 https://github.com/dogtreatfairy/balboa_worldwide_app.git /tmp/balboa_worldwide_app \
+  && git clone ${BACKEND_REPO} /tmp/balboa_worldwide_app \
   && cd /tmp/balboa_worldwide_app \
+  && git checkout ${BACKEND_REF} \
   && gem build balboa_worldwide_app.gemspec \
   && gem install ./balboa_worldwide_app-*.gem \
   && rm -rf /tmp/balboa_worldwide_app \

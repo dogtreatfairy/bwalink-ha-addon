@@ -1,5 +1,10 @@
 # Changelog
 
+## [v2026.2.1] - 2026-02-14
+
+* Pin backend build source to a fixed commit for reproducible addon builds.
+* Add startup configuration validation for `bridge_ip`, `bridge_port`, and MQTT URI format.
+
 ## [v2026.2] - 2026-02-14
 
 * Bump for backend changes.
