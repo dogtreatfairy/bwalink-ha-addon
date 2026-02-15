@@ -51,35 +51,18 @@ else
     DEVICE="tcp://${BRIDGE_IP}:${BRIDGE_PORT}/"
 fi
 
-# Locate the bridge binary
-BWA_BRIDGE=$(command -v bwa_mqtt_bridge 2>/dev/null || true)
-if [ -z "${BWA_BRIDGE}" ]; then
-    bashio::log.error "bwa_mqtt_bridge not found in PATH"
-    bashio::log.error "PATH=${PATH}"
-    bashio::log.error "Gem environment: $(gem environment gemdir 2>&1)"
-    bashio::log.error "Searching common locations..."
-    for p in /usr/bin/bwa_mqtt_bridge /usr/local/bin/bwa_mqtt_bridge /usr/local/bundle/bin/bwa_mqtt_bridge; do
-        if [ -f "$p" ]; then
-            bashio::log.info "Found bwa_mqtt_bridge at ${p}"
-            BWA_BRIDGE="$p"
-            break
-        fi
-    done
-fi
+# Resolve bridge script path from installed gem and run it with ruby.
+# This avoids the RubyGems wrapper path where __FILE__ != $PROGRAM_NAME.
+BWA_BRIDGE_SCRIPT=$(ruby -e 'spec = Gem::Specification.find_by_name("balboa_worldwide_app"); print File.join(spec.gem_dir, "exe", "bwa_mqtt_bridge")' 2>/dev/null || true)
 
-if [ -z "${BWA_BRIDGE}" ]; then
-    bashio::log.fatal "Cannot find bwa_mqtt_bridge executable. Installed gems:"
+if [ -z "${BWA_BRIDGE_SCRIPT}" ] || [ ! -f "${BWA_BRIDGE_SCRIPT}" ]; then
+    bashio::log.fatal "Cannot resolve bwa_mqtt_bridge script from gem installation"
+    bashio::log.error "Installed gems:"
     gem list 2>&1 | while read -r line; do bashio::log.error "  ${line}"; done
     exit 1
 fi
 
-bashio::log.info "Using bridge binary: ${BWA_BRIDGE}"
+bashio::log.info "Using bridge script: ${BWA_BRIDGE_SCRIPT}"
 bashio::log.info "Starting mqtt bridge connecting ${DEVICE} to ${MQTT_URI/:*@/://}"
 
-# Keep the container alive and retry on bridge failures.
-while true; do
-    "${BWA_BRIDGE}" "${MQTT_URI}" "${DEVICE}" 2>&1
-    EXIT_CODE=$?
-    bashio::log.error "bwa_mqtt_bridge exited with code ${EXIT_CODE}; retrying in 5 seconds"
-    sleep 5
-done
+exec ruby "${BWA_BRIDGE_SCRIPT}" "${MQTT_URI}" "${DEVICE}" 2>&1
