@@ -76,5 +76,10 @@ fi
 bashio::log.info "Using bridge binary: ${BWA_BRIDGE}"
 bashio::log.info "Starting mqtt bridge connecting ${DEVICE} to ${MQTT_URI/:*@/://}"
 
-# Use exec with stderr redirected to stdout so Ruby exceptions appear in addon logs
-exec "${BWA_BRIDGE}" ${MQTT_URI} ${DEVICE} 2>&1
+# Keep the container alive and retry on bridge failures.
+while true; do
+    "${BWA_BRIDGE}" "${MQTT_URI}" "${DEVICE}" 2>&1
+    EXIT_CODE=$?
+    bashio::log.error "bwa_mqtt_bridge exited with code ${EXIT_CODE}; retrying in 5 seconds"
+    sleep 5
+done
