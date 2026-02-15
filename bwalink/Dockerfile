@@ -1,7 +1,8 @@
 ARG BUILD_FROM
+FROM ${BUILD_FROM}
+
 ARG BACKEND_REPO=https://github.com/dogtreatfairy/balboa_worldwide_app.git
 ARG BACKEND_REF=99c1eb827f08a301420040632d4d2c36178325db
-FROM ${BUILD_FROM}
 
 # Update and install necessary packages in a single RUN to reduce image layers
 RUN apk update && apk add --no-cache \
