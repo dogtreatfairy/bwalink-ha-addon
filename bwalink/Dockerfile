@@ -18,7 +18,6 @@ RUN apk update && apk add --no-cache \
     socat \
     tzdata \
     build-base \
-  && bundle config set deployment 'true' \
   && git clone ${BACKEND_REPO} /tmp/balboa_worldwide_app \
   && cd /tmp/balboa_worldwide_app \
   && git checkout ${BACKEND_REF} \
