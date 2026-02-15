@@ -51,10 +51,30 @@ else
     DEVICE="tcp://${BRIDGE_IP}:${BRIDGE_PORT}/"
 fi
 
+# Locate the bridge binary
+BWA_BRIDGE=$(command -v bwa_mqtt_bridge 2>/dev/null || true)
+if [ -z "${BWA_BRIDGE}" ]; then
+    bashio::log.error "bwa_mqtt_bridge not found in PATH"
+    bashio::log.error "PATH=${PATH}"
+    bashio::log.error "Gem environment: $(gem environment gemdir 2>&1)"
+    bashio::log.error "Searching common locations..."
+    for p in /usr/bin/bwa_mqtt_bridge /usr/local/bin/bwa_mqtt_bridge /usr/local/bundle/bin/bwa_mqtt_bridge; do
+        if [ -f "$p" ]; then
+            bashio::log.info "Found bwa_mqtt_bridge at ${p}"
+            BWA_BRIDGE="$p"
+            break
+        fi
+    done
+fi
+
+if [ -z "${BWA_BRIDGE}" ]; then
+    bashio::log.fatal "Cannot find bwa_mqtt_bridge executable. Installed gems:"
+    gem list 2>&1 | while read -r line; do bashio::log.error "  ${line}"; done
+    exit 1
+fi
+
+bashio::log.info "Using bridge binary: ${BWA_BRIDGE}"
 bashio::log.info "Starting mqtt bridge connecting ${DEVICE} to ${MQTT_URI/:*@/://}"
 
-#Launch the bwa_mqtt_bridge 
-#/usr/local/bundle/bin/bwa_mqtt_bridge ${MQTT_URI} /dev/hottub
-#/usr/local/bundle/bin/bwa_mqtt_bridge ${MQTT_URI} /dev/hottub
-
-exec /usr/bin/bwa_mqtt_bridge ${MQTT_URI} ${DEVICE}
+# Use exec with stderr redirected to stdout so Ruby exceptions appear in addon logs
+exec "${BWA_BRIDGE}" ${MQTT_URI} ${DEVICE} 2>&1
